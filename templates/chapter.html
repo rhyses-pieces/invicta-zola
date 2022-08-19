@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if page %}
+
+<h1 class="title">{{ page.title }}</h1>
+<aside class="meta">
+<p class="date">{{ page.date }}</p>
+<p class="readtime">{{ page.reading_time }} min</p>
+</aside>
+
+{{ page.content | safe }}
+
+<nav class="pagination">
+    {% if page.lower %}
+    <a href="{{ page.lower.permalink }}">previous</a>
+    {% endif %}
+
+    {% if page.higher %}
+    <a href="{{ page.higher.permalink }}">next</a>
+    {% endif %}
+</nav>
+
+{% set return = get_section(path=page.ancestors | last) %}
+<a href="{{ return.permalink }}">return</a>
+
+{% else %}
+
+<h1 class="title">{{ section.title }}</h1>
+
+{{ section.content | safe }}
+
+{% set url = get_url(path="@/fics/_index.md") %}
+
+<a href="{{ url }}">return</a>
+
+{% endif %}
+
+{% endblock content %}

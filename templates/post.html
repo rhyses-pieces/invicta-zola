@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 class="title">{{ page.title }}</h1>
+<p class="subtitle">{{ page.date }}</p>
+
+{{ page.content | safe }}
+
+{% set return = get_section(path=page.ancestors | last) %}
+<a href="{{ return.permalink }}">return</a>
+
+{% endblock content %}
