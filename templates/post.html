@@ -7,7 +7,11 @@
 
 {{ page.content | safe }}
 
-{% set return = get_section(path=page.ancestors | last) %}
-<a href="{{ return.permalink }}">return</a>
+{% if page.ancestors | length < 1 %}
+    {% set return = get_section(path=page.ancestors | last) %}
+    <a href="{{ return.permalink }}">return</a>
+{% else %}
+    {% include "nav.html" %}
+{% endif %}
 
 {% endblock content %}

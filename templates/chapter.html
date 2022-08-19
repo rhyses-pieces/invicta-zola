@@ -12,7 +12,7 @@
 
 {{ page.content | safe }}
 
-<nav class="pagination">
+<nav class="pagination" aria-label="pagination">
     {% if page.lower %}
     <a href="{{ page.lower.permalink }}">previous</a>
     {% endif %}

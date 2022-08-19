@@ -1,0 +1,29 @@
+@import "mixins";
+@import "variables";
+
+body {
+    font-family: $body;
+    font-size: 1.25rem;
+    @include color-assign(background-color, background);
+    @include color-assign(color, text);
+}
+
+a {
+    @include color-assign(color, accent);
+
+    &:hover, &:focus {
+        @include color-assign(color, accent-alt);
+    }
+}
+
+main {
+    margin: 0 auto;
+    width: 60vw;
+    min-width: 300px;
+    max-width: 650px;
+}
+
+.dim {
+    font-size: 1rem;
+    @include color-assign(color, dim);
+}
