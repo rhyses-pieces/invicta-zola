@@ -10,8 +10,26 @@
 <p class="readtime">{{ page.reading_time }} min</p>
 </aside>
 
-{{ page.content | safe }}
+{% set parent = get_section(path=page.ancestors | last) %}
+{% if parent.pages | length > 1 %}
+<nav class="toc" aria-label="Table of contents">
+    <button class="dropdown" role="switch" aria-controls="tableOfContentsMenu" aria-expanded="false" onclick="tocToggle()">
+        table of contents
+    </button>
+    <div class="content" id="tableOfContentsMenu" role="menu">
+        <a href="{{ parent.permalink }}" target="_top" role="menuitem">- index -</a>
+    {% for chapter in parent.pages %}
+        <a href="{{ chapter.permalink }}" target="_top" role="menuitem">{{ chapter.title }}</a>
+    {% endfor %}
+    </div>
+</nav>
+{% endif %}
 
+<article>
+    {{ page.content | safe }}
+</article>
+
+{% if page.lower or page.higher %}
 <nav class="pagination" aria-label="pagination">
     {% if page.lower %}
     <a href="{{ page.lower.permalink }}">previous</a>
@@ -21,9 +39,9 @@
     <a href="{{ page.higher.permalink }}">next</a>
     {% endif %}
 </nav>
+{% endif %}
 
-{% set return = get_section(path=page.ancestors | last) %}
-<a href="{{ return.permalink }}">return</a>
+<a href="{{ parent.permalink }}">return</a>
 
 {% else %}
 
@@ -32,9 +50,34 @@
 {{ section.content | safe }}
 
 {% set url = get_url(path="@/fics/_index.md") %}
-
 <a href="{{ url }}">return</a>
 
 {% endif %}
 
 {% endblock content %}
+
+{% block scripts %}
+<script>
+    function tocToggle() {
+        let tocMenu = document.getElementById("tableOfContentsMenu");
+        let tocToggle = document.getElementsByClassName("dropdown").item(0);
+
+        tocMenu.classList.toggle("show");
+        
+        if (tocMenu.classList.contains("show")) {
+            tocToggle.setAttribute("aria-expanded", true)
+        } else {
+            tocToggle.setAttribute("aria-expanded", false);
+        }
+    }
+
+    window.onclick = function(e) {
+        if (!e.target.matches('.dropdown')) {
+        var tocMenu = document.getElementById("tableOfContentsMenu");
+          if (tocMenu.classList.contains('show')) {
+            tocMenu.classList.remove('show');
+          }
+        }
+      }
+</script>
+{% endblock %}

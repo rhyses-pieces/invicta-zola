@@ -14,14 +14,17 @@
     {% set section = get_section(path=_section) %}
     <li><a href="{{ section.permalink | safe }}">{{ section.title }}</a></li>
     {% endfor %}
+    {% for page in section.pages %}
+    <li><a href="{{ page.permalink | safe }}">{{ page.title }}</a></li>
+    {% endfor %}
 </ul>
-{% endif %}
-
+{% else %}
 <ul>
     {% for page in section.pages %}
     <li><a href="{{ page.permalink | safe }}">{{ page.title }}</a></li>
     {% endfor %}
 </ul>
+{% endif %}
 
 {% include "nav.html" %}
 

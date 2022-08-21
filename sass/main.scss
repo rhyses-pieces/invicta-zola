@@ -27,3 +27,32 @@ main {
     font-size: 1rem;
     @include color-assign(color, dim);
 }
+
+.toc {
+    position: relative;
+    display: inline-block;
+
+    button {
+        border: none;
+        padding: 1em 1.2em;
+
+        &:hover, &:focus {
+            background-color: aliceblue;
+            cursor: pointer;
+        }
+    }
+
+    .content {
+        display: none;
+        position: absolute;
+        background-color: aliceblue;
+        min-width: 160px;
+        z-index: 1;
+
+        a {
+            display: block;
+        }
+    }
+
+    .show { display: block; }
+}
