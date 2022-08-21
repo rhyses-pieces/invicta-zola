@@ -2,14 +2,14 @@
 
 {% block content %}
 
-<h1 class="title">{{ section.title }}</h1>
+<h1 class="title" id="main">{{ section.title }}</h1>
 
 {% if section.content %}
 {{ section.content | safe }}
 {% endif %}
 
 {% if section.subsections %}
-<ul>
+<ul class="posts-list">
     {% for _section in section.subsections %}
     {% set section = get_section(path=_section) %}
     <li><a href="{{ section.permalink | safe }}">{{ section.title }}</a></li>
@@ -19,13 +19,11 @@
     {% endfor %}
 </ul>
 {% else %}
-<ul>
+<ul class="posts-list">
     {% for page in section.pages %}
     <li><a href="{{ page.permalink | safe }}">{{ page.title }}</a></li>
     {% endfor %}
 </ul>
 {% endif %}
-
-{% include "nav.html" %}
 
 {% endblock content %}

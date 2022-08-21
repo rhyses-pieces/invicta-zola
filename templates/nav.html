@@ -1,9 +1,10 @@
-<nav class="menu">
+<nav class="menu" aria-label="Main menu">
+    <ul>
     {% for item in config.extra.menu %}
         {% if current_path == item.link %}
-            <a class="link active" href="{{ item.link }}" aria-current="page">{{ item.text }}</a>
+            <li><a class="link active" href="{{ item.link }}" aria-current="page">{{ item.text }}</a></li>
         {% else %}
-            <a class="link" href="{{ item.link }}">{{ item.text }}</a>
+            <li><a class="link" href="{{ item.link }}">{{ item.text }}</a></li>
         {% endif %}
     {% endfor %}
 </nav>

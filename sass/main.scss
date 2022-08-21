@@ -1,11 +1,45 @@
 @import "mixins";
 @import "variables";
 
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
 body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 5vh clamp(1rem, 5vw, 3rem) 1rem;
     font-family: $body;
     font-size: 1.25rem;
     @include color-assign(background-color, background);
     @include color-assign(color, text);
+    line-height: 1.5;
+
+    > * {
+        width: Min(100%, $max-width);
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+main {
+    margin-top: $layout-spacing;
+}
+
+:is(h1, h2, h3) {
+    line-height: 1.2
+}
+
+:is(h2, h3):not(:first-child) {
+    margin-top: 2e,;
+}
+
+article {
+    * + * {
+        margin-top: 1em;
+    }
 }
 
 a {
@@ -16,34 +50,53 @@ a {
     }
 }
 
-main {
-    margin: 0 auto;
-    width: 60vw;
-    min-width: 300px;
-    max-width: 650px;
-}
-
 .dim {
     font-size: 1rem;
     @include color-assign(color, dim);
 }
 
+// table of contents menu styling
+
 .toc {
     position: relative;
     display: inline-block;
 
+    ul {
+        list-style: none;
+        padding: 0;
+
+        li {
+            padding: 0;
+            margin: 0.5em;
+        }
+    }
+
     button {
-        border: none;
-        padding: 1em 1.2em;
+        background-color: transparent;
+        border: 1px solid;
+        @include color-assign(border-color, dim);
+        font-family: inherit;
+        color: inherit;
+        padding: 0.25em 0.5em;
+        display: inline-flex;
+        align-items: center;
 
         &:hover, &:focus {
             background-color: aliceblue;
             cursor: pointer;
         }
+
+        &::after {
+            content: "";
+            border: 0.35rem solid transparent;
+            @include color-assign(border-top-color, accent);
+            margin-left: 0.25em;
+            transform: translateY(0.25em);
+        }
     }
 
     .content {
-        display: none;
+        visibility: hidden;
         position: absolute;
         background-color: aliceblue;
         min-width: 160px;
@@ -54,5 +107,5 @@ main {
         }
     }
 
-    .show { display: block; }
+    .show { visibility: visible; }
 }

@@ -4,7 +4,7 @@
 
 {% if page %}
 
-<h1 class="title">{{ page.title }}</h1>
+<h1 class="title" id="chapter-title">{{ page.title }}</h1>
 <aside class="meta">
 <p class="date">{{ page.date }}</p>
 <p class="readtime">{{ page.reading_time }} min</p>
@@ -13,15 +13,15 @@
 {% set parent = get_section(path=page.ancestors | last) %}
 {% if parent.pages | length > 1 %}
 <nav class="toc" aria-label="Table of contents">
-    <button class="dropdown" role="switch" aria-controls="tableOfContentsMenu" aria-expanded="false" onclick="tocToggle()">
+    <button type="button" class="dropdown" role="switch" aria-controls="tableOfContentsMenu" aria-expanded="false" onclick="tocToggle()">
         table of contents
     </button>
-    <div class="content" id="tableOfContentsMenu" role="menu">
-        <a href="{{ parent.permalink }}" target="_top" role="menuitem">- index -</a>
+    <ul class="content" id="tableOfContentsMenu">
+        <li><a href="{{ parent.permalink }}" target="_top">- index -</a></li>
     {% for chapter in parent.pages %}
-        <a href="{{ chapter.permalink }}" target="_top" role="menuitem">{{ chapter.title }}</a>
+        <li><a href="{{ chapter.permalink }}" target="_top">{{ chapter.title }}</a></li>
     {% endfor %}
-    </div>
+    </ul>
 </nav>
 {% endif %}
 
