@@ -1,83 +1,79 @@
 {% extends "base.html" %}
 
-{% block content %}
+{% block preload %}
+<link rel="preload" href="/fonts/iAWriterDuospace-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/iAWriterDuospace-Italic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/iAWriterDuospace-Bold.woff2" as="font" type="font/woff2" crossorigin>
+{% endblock preload %}
 
+{% block content %}
 {% if page %}
 
-<h1 class="title" id="chapter-title">{{ page.title }}</h1>
-<aside class="meta">
-<p class="date">{{ page.date }}</p>
-<p class="readtime">{{ page.reading_time }} min</p>
-</aside>
+    <article>
+        <h1 class="title">{{ page.title }}</h1>
+        <aside class="meta dim">
+            <time datetime="{{ page.date }}">Posted on {{ page.date | date(format='%B %_d, %Y') }}</time>
+            <p class="readtime">{{ page.reading_time }} minute{{ page.reading_time | pluralize }}</p>
+        </aside>
 
-{% set parent = get_section(path=page.ancestors | last) %}
-{% if parent.pages | length > 1 %}
-<nav class="toc" aria-label="Table of contents">
-    <button type="button" class="dropdown" role="switch" aria-controls="tableOfContentsMenu" aria-expanded="false" onclick="tocToggle()">
-        table of contents
-    </button>
-    <ul class="content" id="tableOfContentsMenu">
-        <li><a href="{{ parent.permalink }}" target="_top">- index -</a></li>
-    {% for chapter in parent.pages %}
-        <li><a href="{{ chapter.permalink }}" target="_top">{{ chapter.title }}</a></li>
-    {% endfor %}
-    </ul>
-</nav>
-{% endif %}
+        {% set parent = get_section(path=page.ancestors | last) %}
+        {% if parent.pages | length > 1 %}
+        <nav class="toc">
+            <form action="#">
+            <select id="tableOfContents" aria-label="Table of contents">
+                <option value="{{ parent.permalink }}">Table of Contents</option>
+                {% for chapter in parent.pages %}
+                <option value="{{ chapter.permalink }}">{{ chapter.title }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">
+                Go to chapter
+            </button>
+            </form>
+        </nav>
+        {% endif %}
+    
+        <div class="chapter">
+        {{ page.content | safe }}
+        </div>
+    </article>
 
-<article>
-    {{ page.content | safe }}
-</article>
+    {% if page.lower or page.higher %}
+    <nav class="pagination" aria-label="Pagination">
+        {% if page.lower %}
+        <a href="{{ page.lower.permalink }}">previous</a>
+        {% endif %}
 
-{% if page.lower or page.higher %}
-<nav class="pagination" aria-label="pagination">
-    {% if page.lower %}
-    <a href="{{ page.lower.permalink }}">previous</a>
+        {% if page.higher %}
+        <a href="{{ page.higher.permalink }}">next</a>
+        {% endif %}
+    </nav>
     {% endif %}
 
-    {% if page.higher %}
-    <a href="{{ page.higher.permalink }}">next</a>
-    {% endif %}
-</nav>
-{% endif %}
-
-<a href="{{ parent.permalink }}">return</a>
+    <a href="{{ parent.permalink }}">return</a>
 
 {% else %}
 
-<h1 class="title">{{ section.title }}</h1>
+    <article>
+    <h1 class="title">{{ section.title }}</h1>
+    <aside class="meta dim">
+        <time datetime="{{ page.date }}">Posted on {{ page.date | date(format='%B %_d, %Y') }}</time>
+        <p class="readtime">{{ page.reading_time }} minute{{ page.reading_time | pluralize }}</p>
+    </aside>
 
-{{ section.content | safe }}
+    <div class="chapter">
+        {{ section.content | safe }}
+    </div>
+    </article>
 
-{% set url = get_url(path="@/fics/_index.md") %}
-<a href="{{ url }}">return</a>
+    {% set url = get_url(path="@/fics/_index.md") %}
+    <a href="{{ url }}">return</a>
 
 {% endif %}
-
 {% endblock content %}
 
 {% block scripts %}
 <script>
-    function tocToggle() {
-        let tocMenu = document.getElementById("tableOfContentsMenu");
-        let tocToggle = document.getElementsByClassName("dropdown").item(0);
-
-        tocMenu.classList.toggle("show");
-        
-        if (tocMenu.classList.contains("show")) {
-            tocToggle.setAttribute("aria-expanded", true)
-        } else {
-            tocToggle.setAttribute("aria-expanded", false);
-        }
-    }
-
-    window.onclick = function(e) {
-        if (!e.target.matches('.dropdown')) {
-        var tocMenu = document.getElementById("tableOfContentsMenu");
-          if (tocMenu.classList.contains('show')) {
-            tocMenu.classList.remove('show');
-          }
-        }
-      }
+    
 </script>
-{% endblock %}
+{% endblock scripts %}

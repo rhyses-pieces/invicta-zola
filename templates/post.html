@@ -2,14 +2,18 @@
 
 {% block content %}
 
-<h1 class="title">{{ page.title }}</h1>
-<p class="subtitle">{{ page.date }}</p>
-
 <article>
+    <h1 class="title">{{ page.title }}</h1>
+    <aside class="meta dim">
+        {% if page.date %}
+        <time datetime="{{ page.date }}">Posted on {{ page.date | date(format='%B %_d, %Y') }}</time>
+        {% endif %}
+    </aside>
+
 {{ page.content | safe }}
 </article>
 
-{% if page.ancestors | length < 1 %}
+{% if page.ancestors | length != 1 %}
     {% set return = get_section(path=page.ancestors | last) %}
     <a href="{{ return.permalink }}">return</a>
 {% endif %}

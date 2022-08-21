@@ -7,9 +7,11 @@
     <title>invicta.exe</title>
     <link rel="stylesheet" href="/main.css" media="screen">
     <link rel="preload" href="/fonts/galmuri.woff2" as="font" type="font/woff2" crossorigin>
+    {% block preload %}
+    {% endblock %}
 </head>
 <body>
-    <a class="skip" href="#content">Skip to content</a>
+    <a class="skip dim" href="#content">Skip to content</a>
 
     {% include "nav.html" %}
 

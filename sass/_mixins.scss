@@ -45,6 +45,9 @@
 }
 
 @include font-face(galmuri, "/fonts/galmuri", 400, normal);
+@include font-face(duospace, "/fonts/iAWriterDuospace-Regular", 400, normal);
+@include font-face(duospace, "/fonts/iAWriterDuospace-Italic", 400, italic);
+@include font-face(duospace, "/fonts/iAWriterDuospace-Bold", 600, normal);
 
 // implement dark mode
 $colors: (

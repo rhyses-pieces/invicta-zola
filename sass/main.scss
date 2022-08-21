@@ -1,6 +1,7 @@
 @import "mixins";
 @import "variables";
 
+// base
 * {
     box-sizing: border-box;
     margin: 0;
@@ -19,8 +20,7 @@ body {
 
     > * {
         width: Min(100%, $max-width);
-        margin-left: auto;
-        margin-right: auto;
+        margin-inline: auto;
     }
 }
 
@@ -33,7 +33,7 @@ main {
 }
 
 :is(h2, h3):not(:first-child) {
-    margin-top: 2e,;
+    margin-top: 2em;
 }
 
 article {
@@ -51,61 +51,61 @@ a {
 }
 
 .dim {
-    font-size: 1rem;
+    font-size: 0.9375rem;
     @include color-assign(color, dim);
 }
 
-// table of contents menu styling
+// forms
+
+select {
+    appearance: none;
+    background-color: transparent;
+    border: none;
+    padding: 0 1em 0 0;
+    width: 100%;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: inherit;
+    line-height: inherit;
+    outline: none;
+
+    &:focus {
+        outline: 2px solid;
+        @include color-assign(outline-color, dim);
+    }
+}
+
+// main menu
+
+.skip {
+    position: absolute;
+    left: -10000px;
+    overflow: hidden;
+    padding: 0.2em 0.5em;
+    text-decoration: none;
+
+    &:focus {
+        position: fixed;
+        top: 0.5em;
+        left: 0.5em;
+        width: max-content;
+        outline: 2px solid;
+        @include color-assign(outline-color, dim);
+    }
+}
+
+// chapter
+
+.chapter {
+    font-family: $chapter;
+    font-size: 1.1rem;
+}
+
+// fics toc dropdown menu
 
 .toc {
-    position: relative;
-    display: inline-block;
-
-    ul {
-        list-style: none;
-        padding: 0;
-
-        li {
-            padding: 0;
-            margin: 0.5em;
-        }
+    select {
+        font-size: 0.9375rem;
+        width: 20ch;
     }
-
-    button {
-        background-color: transparent;
-        border: 1px solid;
-        @include color-assign(border-color, dim);
-        font-family: inherit;
-        color: inherit;
-        padding: 0.25em 0.5em;
-        display: inline-flex;
-        align-items: center;
-
-        &:hover, &:focus {
-            background-color: aliceblue;
-            cursor: pointer;
-        }
-
-        &::after {
-            content: "";
-            border: 0.35rem solid transparent;
-            @include color-assign(border-top-color, accent);
-            margin-left: 0.25em;
-            transform: translateY(0.25em);
-        }
-    }
-
-    .content {
-        visibility: hidden;
-        position: absolute;
-        background-color: aliceblue;
-        min-width: 160px;
-        z-index: 1;
-
-        a {
-            display: block;
-        }
-    }
-
-    .show { visibility: visible; }
 }
