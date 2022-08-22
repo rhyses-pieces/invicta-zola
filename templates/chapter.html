@@ -10,28 +10,30 @@
 {% if page %}
 
     <article>
-        <h1 class="title">{{ page.title }}</h1>
-        <aside class="meta dim">
-            <time datetime="{{ page.date }}">Posted on {{ page.date | date(format='%B %_d, %Y') }}</time>
-            <p class="readtime">{{ page.reading_time }} minute{{ page.reading_time | pluralize }}</p>
-        </aside>
-
         {% set parent = get_section(path=page.ancestors | last) %}
         {% if parent.pages | length > 1 %}
-        <nav class="toc">
-            <form action="#">
-            <select id="tableOfContents" aria-label="Table of contents">
-                <option value="{{ parent.permalink }}">Table of Contents</option>
-                {% for chapter in parent.pages %}
-                <option value="{{ chapter.permalink }}">{{ chapter.title }}</option>
-                {% endfor %}
-            </select>
-            <button type="submit">
-                Go to chapter
-            </button>
-            </form>
-        </nav>
+        <aside class="toc" aria-label="Table of contents">
+            <details id="toc">
+                <summary>Table of contents</summary>
+                <nav class="wrapper">
+                    <ul>
+                        <li><a href="{{ parent.permalink }}">Index</a></li>
+                        {% for chapter in parent.pages %}
+                        <li><a href="{{ chapter.permalink }}">{{ chapter.title }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </nav>
+            </details>
+        </aside>
         {% endif %}
+
+        <header>
+            <h1 class="title">{{ page.title }}</h1>
+            <aside class="meta dim">
+                <time datetime="{{ page.date }}">Posted on {{ page.date | date(format='%B %_d, %Y') }}</time>
+                <p class="readtime">{{ page.reading_time }} minute{{ page.reading_time | pluralize }}</p>
+            </aside>
+        </header>
     
         <div class="chapter">
         {{ page.content | safe }}
@@ -71,9 +73,3 @@
 
 {% endif %}
 {% endblock content %}
-
-{% block scripts %}
-<script>
-    
-</script>
-{% endblock scripts %}

@@ -20,11 +20,14 @@ body {
 
     > * {
         width: Min(100%, $max-width);
+        max-width: 80vw;
         margin-inline: auto;
     }
 }
 
 main {
+    display: flex;
+    flex-direction: column;
     margin-top: $layout-spacing;
 }
 
@@ -39,6 +42,21 @@ main {
 article {
     * + * {
         margin-top: 1em;
+    }
+
+    @media screen and (min-width: $max-view) {
+        align-self: center;
+        width: 80vw;
+        display: grid;
+        grid-template: 1fr 1fr / 20ch 1fr;
+
+        .toc {
+            grid-row: span 2;
+        }
+
+        .chapter {
+            grid-column: 2;
+        }
     }
 }
 
@@ -75,6 +93,20 @@ select {
     }
 }
 
+button {
+    @include color-assign(background-color, accent);
+    @include color-assign(color, background);
+    border: none;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: inherit;
+    line-height: inherit;
+
+    &:focus {
+        @include color-assign(background-color, text);
+    }
+}
+
 // main menu
 
 .skip {
@@ -94,7 +126,7 @@ select {
     }
 }
 
-// chapter
+// posts / chapter
 
 .chapter {
     font-family: $chapter;
@@ -104,8 +136,8 @@ select {
 // fics toc dropdown menu
 
 .toc {
-    select {
-        font-size: 0.9375rem;
-        width: 20ch;
+    width: fit-content;
+    details {
+        cursor: pointer;
     }
 }
