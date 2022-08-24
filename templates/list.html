@@ -2,7 +2,11 @@
 
 {% block content %}
 
-<h1 class="title" id="main">{{ section.title }}</h1>
+{% if section.ancestors %}
+{% include "breadcrumbs.html" %}
+{% endif %}
+
+<h1 class="title">{{ section.title }}</h1>
 
 {% if section.content %}
 {{ section.content | safe }}
@@ -12,16 +16,19 @@
 <ul class="posts-list">
     {% for _section in section.subsections %}
     {% set section = get_section(path=_section) %}
-    <li><a href="{{ section.permalink | safe }}">{{ section.title }}</a></li>
+    <li><a href="{{ section.permalink | safe }}">{{ section.title }}</a> 
+        {% set date = section.pages | map(attribute="date") | last | date(format='%B %_d, %Y') %}
+        <span class="dim">Updated on <time datetime="{{ date }}">{{ date }}</time></span>
+    </li>
     {% endfor %}
     {% for page in section.pages %}
-    <li><a href="{{ page.permalink | safe }}">{{ page.title }}</a></li>
+    <li><a href="{{ page.permalink | safe }}">{{ page.title }}</a> <span class="dim">Posted on <time datetime="{{ page.date }}">{{ page.date | date(format='%B %_d, %Y') }}</time></span></li>
     {% endfor %}
 </ul>
 {% else %}
 <ul class="posts-list">
     {% for page in section.pages %}
-    <li><a href="{{ page.permalink | safe }}">{{ page.title }}</a></li>
+    <li><a href="{{ page.permalink | safe }}">{{ page.title }}</a> <span class="dim">Posted on <time datetime="{{ page.date }}">{{ page.date | date(format='%B %_d, %Y') }}</time></span></li>
     {% endfor %}
 </ul>
 {% endif %}

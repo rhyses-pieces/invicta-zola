@@ -1,16 +1,14 @@
-{% block breadcrumb %}
-<nav class="breadcrumb" aria-label="breadcrumbs">
-    <a class="path" href="/">Home</a>
-    {% set current = section | default(value=page) %}
+<nav class="breadcrumbs" aria-label="Breadcrumbs">
+    <ol role="list">
+        <li><a class="path" href="/">Home</a></li>
+        {% set current = section | default(value=page) %}
     {% for ancestor in current.ancestors %}
         {% if loop.first %}
             {% continue %}
         {% endif %}
-        <span class="separator">/</span>
         {% set section = get_section(path=ancestor) %}
-        <a class="path" href="{{ section.permalink }}">{{ section.title }}</a>
+        <li><a class="path" href="{{ section.permalink }}">{{ section.title }}</a></li>
     {% endfor %}
-    <span class="separator">/</span>
-    <a class="path active" href="{{ current.permalink }}" aria-current="page">{{ current.title }}</a>
+        <li><a class="path active" href="{{ current.permalink }}" aria-current="page">{{ current.title }}</a></li>
+    </ol>
 </nav>
-{% endblock breadcrumb %}

@@ -9,24 +9,24 @@
 {% block content %}
 {% if page %}
 
-    <article>
-        {% set parent = get_section(path=page.ancestors | last) %}
-        {% if parent.pages | length > 1 %}
-        <aside class="toc" aria-label="Table of contents">
-            <details id="toc">
-                <summary>Table of contents</summary>
-                <nav class="wrapper">
-                    <ul>
-                        <li><a href="{{ parent.permalink }}">Index</a></li>
-                        {% for chapter in parent.pages %}
-                        <li><a href="{{ chapter.permalink }}">{{ chapter.title }}</a></li>
-                        {% endfor %}
-                    </ul>
-                </nav>
-            </details>
-        </aside>
-        {% endif %}
+    {% set parent = get_section(path=page.ancestors | last) %}
+    {% if parent.pages | length > 1 %}
+    <nav class="toc" id="toc" aria-label="Table of contents">
+        <a class="skip" href="#content">Skip to content</a>
+        <ol role="list">
+            <li><span class="title">{{ parent.title }}</span></li>
+            {% for chapter in parent.pages %}
+            {% if current_url == chapter.permalink %}
+            <li><a class="active" href="{{ chapter.permalink }}" aria-current="page">{{ chapter.title }}</a></li>
+            {% else %}
+            <li><a href="{{ chapter.permalink }}">{{ chapter.title }}</a></li>
+            {% endif %}
+            {% endfor %}
+        </ol>
+    </nav>
+    {% endif %}
 
+    <article id="content">
         <header>
             <h1 class="title">{{ page.title }}</h1>
             <aside class="meta dim">
@@ -40,23 +40,21 @@
         </div>
     </article>
 
-    {% if page.lower or page.higher %}
     <nav class="pagination" aria-label="Pagination">
         {% if page.lower %}
-        <a href="{{ page.lower.permalink }}">previous</a>
+        <a class="previous" href="{{ page.lower.permalink }}"><span class="sr-hidden" role="presentation">←</span> {{ page.lower.title }}</a>
         {% endif %}
+
+        <a class="index" href="{{ parent.permalink }}">{{ parent.title }}</a>
 
         {% if page.higher %}
-        <a href="{{ page.higher.permalink }}">next</a>
+        <a class="next" href="{{ page.higher.permalink }}">{{ page.higher.title }} <span class="sr-hidden" role="presentation">→</span></a>
         {% endif %}
     </nav>
-    {% endif %}
-
-    <a href="{{ parent.permalink }}">return</a>
 
 {% else %}
 
-    <article>
+    <article id="content">
     <h1 class="title">{{ section.title }}</h1>
     <aside class="meta dim">
         <time datetime="{{ page.date }}">Posted on {{ page.date | date(format='%B %_d, %Y') }}</time>
@@ -68,8 +66,8 @@
     </div>
     </article>
 
-    {% set url = get_url(path="@/fics/_index.md") %}
-    <a href="{{ url }}">return</a>
+    {% set index = get_section(path="@/fics/_index.md") %}
+    <a href="{{ index.permalink }}">{{ index.title }}</a>
 
 {% endif %}
 {% endblock content %}

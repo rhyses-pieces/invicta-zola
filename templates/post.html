@@ -2,20 +2,31 @@
 
 {% block content %}
 
-<article>
-    <h1 class="title">{{ page.title }}</h1>
-    <aside class="meta dim">
-        {% if page.date %}
-        <time datetime="{{ page.date }}">Posted on {{ page.date | date(format='%B %_d, %Y') }}</time>
-        {% endif %}
-    </aside>
+{% if page.ancestors | length == 1 %}
+{% include "breadcrumbs.html" %}
+{% endif %}
 
-{{ page.content | safe }}
+<article id="content">
+    <header>
+        <h1 class="title">{{ page.title }}</h1>
+        <aside class="meta dim">
+            {% if page.date %}
+            <time datetime="{{ page.date }}">Posted on {{ page.date | date(format='%B %_d, %Y') }}</time>
+            {% endif %}
+        </aside>
+    </header>
+
+    {{ page.content | safe }}
+
+    <article class="comment">
+        <h2>user</h2>
+        content
+    </article>
 </article>
 
 {% if page.ancestors | length != 1 %}
     {% set return = get_section(path=page.ancestors | last) %}
-    <a href="{{ return.permalink }}">return</a>
+    <a href="{{ return.permalink }}">{{ return.title }}</a>
 {% endif %}
 
 {% endblock content %}

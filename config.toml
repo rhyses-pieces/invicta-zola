@@ -24,7 +24,7 @@ anchors = "safe"
 # Put all your custom variables here
 menu = [
     { text = "index", link = "/" },
-    { text = "about", link = "/about" },
-    { text = "journal", link = "/journal" },
-    { text = "fics", link = "/fics" }
+    { text = "about", link = "/about/" },
+    { text = "journal", link = "/journal/" },
+    { text = "fics", link = "/fics/" }
 ]
