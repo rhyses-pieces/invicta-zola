@@ -39,15 +39,18 @@
 		font-family: quote($name);
 		font-style: $style;
 		font-weight: $weight;
-		font-display: optional;
+		font-display: swap;
 		src: $src;
 	}
 }
 
-@include font-face(galmuri, "/fonts/galmuri", 400, normal);
+@include font-face(galmuri, "/fonts/galmuri", 400, normal, woff2);
+@include font-face(greybeard, "/fonts/Greybeard-16px", 400, normal, woff2);
+@include font-face(greybeard, "/fonts/Greybeard-16px-Italic", 400, italic, woff2);
+@include font-face(greybeard, "/fonts/Greybeard-16px-Bold", 700, normal, woff2);
 @include font-face(duospace, "/fonts/iAWriterDuospace-Regular", 400, normal);
 @include font-face(duospace, "/fonts/iAWriterDuospace-Italic", 400, italic);
-@include font-face(duospace, "/fonts/iAWriterDuospace-Bold", 600, normal);
+@include font-face(duospace, "/fonts/iAWriterDuospace-Bold", 700, normal);
 
 // implement dark mode
 $colors: (
@@ -63,7 +66,7 @@ $colors: (
         dim: #a491db,
         text: #c9b9f6,
         accent: #1e8ad6,
-        accent-600: #3ba0e6,
+        accent-700: #3ba0e6,
     ),
 );
 

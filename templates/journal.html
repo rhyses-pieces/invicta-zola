@@ -1,0 +1,20 @@
+{% extends "list.html" %}
+
+{% block content %}
+
+{% block title %}
+{{ super() }}
+{% endblock title %}
+
+{% block posts %}
+<ul class="posts-list">
+    {% for page in section.pages %}
+    <li>
+        <a href="{{ page.permalink }}">{{ page.title }}</a>
+        <time class="dim" datetime="{{ page.date }}">{{ page.date }}</time>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock posts %}
+
+{% endblock content %}

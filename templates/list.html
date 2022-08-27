@@ -2,8 +2,9 @@
 
 {% block content %}
 
+{% block title %}
 {% if section.ancestors %}
-{% include "breadcrumbs.html" %}
+{% include "partials/breadcrumbs.html" %}
 {% endif %}
 
 <h1 class="title">{{ section.title }}</h1>
@@ -11,26 +12,41 @@
 {% if section.content %}
 {{ section.content | safe }}
 {% endif %}
+{% endblock title %}
 
-{% if section.subsections %}
+{% if section.subsections and section.pages %}
+<h2 class="title">chaptered fics</h2>
 <ul class="posts-list">
     {% for _section in section.subsections %}
     {% set section = get_section(path=_section) %}
-    <li><a href="{{ section.permalink | safe }}">{{ section.title }}</a> 
+    <li>
+        <a href="{{ section.permalink }}">{{ section.title }}</a> 
         {% set date = section.pages | map(attribute="date") | last | date(format='%B %_d, %Y') %}
-        <span class="dim">Updated on <time datetime="{{ date }}">{{ date }}</time></span>
+        <span class="dim">{% if section.pages | map(attribute="updated") %}}Updated{% else %}Posted{% endif %} on <time datetime="{{ date }}">{{ date }}</time></span>
     </li>
-    {% endfor %}
+    {% endfor %}    
+</ul>
+
+<h2 class="title">drabbles</h2>
+<ul class="posts-list">
     {% for page in section.pages %}
-    <li><a href="{{ page.permalink | safe }}">{{ page.title }}</a> <span class="dim">Posted on <time datetime="{{ page.date }}">{{ page.date | date(format='%B %_d, %Y') }}</time></span></li>
+    <li>
+        <a href="{{ page.permalink }}">{{ page.title }}</a>
+        <span class="dim">{% if page.updated %}Updated{% else %}Posted{% endif %} on <time datetime="{{ page.date }}">{{ page.date | date(format='%B %_d, %Y') }}</time></span>
+    </li>
     {% endfor %}
 </ul>
 {% else %}
+{% block posts %}
 <ul class="posts-list">
     {% for page in section.pages %}
-    <li><a href="{{ page.permalink | safe }}">{{ page.title }}</a> <span class="dim">Posted on <time datetime="{{ page.date }}">{{ page.date | date(format='%B %_d, %Y') }}</time></span></li>
+    <li>
+        <a href="{{ page.permalink }}">{{ page.title }}</a>
+        <span class="dim">{% if page.updated %}Updated{% else %}Posted{% endif %} on <time datetime="{{ page.date }}">{{ page.date | date(format='%B %_d, %Y') }}</time></span>
+    </li>
     {% endfor %}
 </ul>
+{% endblock posts %}
 {% endif %}
 
 {% endblock content %}

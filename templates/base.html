@@ -6,19 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>invicta.exe</title>
     <link rel="stylesheet" href="/main.css" media="screen">
+    {% block rss %}
+    <link rel="alternate" type="application/atom+xml" title="RSS" href="{{ get_url(path="atom.xml", trailing_slash=false) }}">
+    {% endblock rss %}
     <link rel="preload" href="/fonts/galmuri.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/Greybeard-16px.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/Greybeard-16px-Italic.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/Greybeard-16px-Bold.woff2" as="font" type="font/woff2" crossorigin>
     {% block preload %}
-    {% endblock %}
+    {% endblock preload %}
 </head>
 <body>
-    {% include "nav.html" %}
+    {% include "partials/nav.html" %}
 
     <main id="main">
         {% block content %}
-        {% endblock %}
+        {% endblock content %}
     </main>
     
     {% block scripts %}
-    {% endblock %}
+    {% endblock scripts %}
 </body>
 </html>
