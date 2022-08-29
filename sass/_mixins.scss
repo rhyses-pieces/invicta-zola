@@ -1,6 +1,4 @@
-// =============================================================================
-// String Replace
-// =============================================================================
+// font face string replace
 
 @function str-replace($string, $search, $replace: "") {
 	$index: str-index($string, $search);
@@ -12,9 +10,7 @@
 	@return $string;
 }
 
-// =============================================================================
-// Font Face
-// =============================================================================
+// font face mixin
 
 @mixin font-face($name, $path, $weight: null, $style: null, $exts: woff2 woff) {
 	$src: null;
@@ -44,13 +40,27 @@
 	}
 }
 
+// variable fonts are a little special so we'll define them manually here
+@font-face {
+    font-family: "quattro";
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url("/static/fonts/iAWriterQuattroV.woff2") format("woff2-variations");
+}
+
+@font-face {
+    font-family: "quattro";
+    font-style: italic;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url("/static/fonts/iAWriterQuattroV-Italic.woff2") format("woff2-variations");
+}
+
 @include font-face(galmuri, "/fonts/galmuri", 400, normal, woff2);
 @include font-face(greybeard, "/fonts/Greybeard-16px", 400, normal, woff2);
 @include font-face(greybeard, "/fonts/Greybeard-16px-Italic", 400, italic, woff2);
 @include font-face(greybeard, "/fonts/Greybeard-16px-Bold", 700, normal, woff2);
-@include font-face(duospace, "/fonts/iAWriterDuospace-Regular", 400, normal);
-@include font-face(duospace, "/fonts/iAWriterDuospace-Italic", 400, italic);
-@include font-face(duospace, "/fonts/iAWriterDuospace-Bold", 700, normal);
 
 // implement dark mode
 $colors: (
@@ -59,14 +69,14 @@ $colors: (
         dim: #584861,
         text: #141217,
         accent: #126E63,
-        accent-alt: #085B51,
+        accent-alt: #268f82,
     ),
     dark: (
-        background: #34293a,
-        dim: #a491db,
-        text: #c9b9f6,
-        accent: #1e8ad6,
-        accent-700: #3ba0e6,
+        background: #201A23,
+        dim: #c1b6db,
+        text: #e8e0ff,
+        accent: #93c41a,
+        accent-alt: #76951b,
     ),
 );
 

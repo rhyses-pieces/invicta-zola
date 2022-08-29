@@ -57,22 +57,29 @@ a {
     @include color-assign(color, accent);
 
     &:hover, &:focus { @include color-assign(color, accent-alt); }
+
+    &[aria-current]:not([aria-current="false"]) {
+        font-weight: bold;
+    }
 }
 
-img {
-    display: grid;
+:is(img, hr) {
     max-width: 100%;
+    height: auto;
     object-fit: cover;
 
-    @media screen and (max-width: $max-width) {
-        object-fit: none;
-        object-position: bottom center;
-    }
-
-    @supports (image-rendering: crisp-edges) and (image-rendering: pixelated) {
+    @supports (image-rendering: crisp-edges) or (image-rendering: pixelated) {
         image-rendering: crisp-edges;
         image-rendering: pixelated;
     }
+}
+
+hr {
+    margin: 1rem auto;
+    border: none;
+    height: 50px;
+    width: 179px;
+    background-image: url("/images/bird_divider1.gif");
 }
 
 .dim {
@@ -80,8 +87,6 @@ img {
     font-size: 0.625rem;
     @include color-assign(color, dim);
 }
-
-.active { font-weight: bold; }
 
 // forms
 
@@ -97,6 +102,19 @@ button {
     @include color-assign(color, background);
 
     &:focus { @include color-assign(background-color, text); }
+}
+
+// index page
+
+.banner {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    grid-template-rows: min-content 1fr;
+    gap: 1em;
+
+    > img { grid-area: 1 / 1 / 3 / 2; }
+    > .title { grid-area: 1 / 2 / 2 / 3; }
+    > *:not(img, .title) { grid-area: 2 / 2 / 3 / 3; }
 }
 
 // main menu
@@ -122,9 +140,10 @@ button {
     ul {
         display: flex;
         justify-content: center;
+        gap: 1em;
 
-        li {
-            &::marker { content: icon; }
+        & li::marker {
+            content: url("/images/x7.gif");
         }
     }
 }
@@ -144,6 +163,7 @@ button {
             @include color-assign(background-color, background);
             line-height: 1.5;
             padding: 0 1rem;
+            margin-top: unset;
         }
 
         &::after {
@@ -163,11 +183,28 @@ button {
 
 .chapter {
     font-family: $chapter;
-    font-size: 1.1rem;
 
     @supports (text-rendering: auto) and (text-rendering: optimizeLegibility) {
         text-rendering: auto;
         text-rendering: optimizeLegibility;
+    }
+}
+
+.post {
+    border: 3px double;
+    @include color-assign(border-color, dim);
+    padding: 1.5rem clamp(1rem, 5%, 3rem);
+
+    ul:not(.posts-list) {
+        margin-left: 1em;
+        
+        &:first-child {
+            margin-top: 1em;
+        }
+
+        & li::marker {
+            content: url("/images/x7.gif");
+        }
     }
 }
 
@@ -192,6 +229,7 @@ button {
 
     .wrapper {
         ol {
+            list-style: none;
             counter-reset: chapter;
 
             > :is(li):not(.title) {
@@ -214,17 +252,12 @@ button {
 
                 &::before {
                     content: counter(chapter) ". ";
-                    @include color-assign(color, dim);
                     font-weight: normal;
                 }
 
                 &:hover, &:focus {
                     @include color-assign(background-color, dim);
                     @include color-assign(color, background);
-
-                    &::before {
-                        @include color-assign(color, background);
-                    }
                 }
             }
         }
@@ -237,6 +270,7 @@ button {
     text-transform: lowercase;
 
     ol {
+        list-style: none;
         display: flex;
         justify-content: flex-start;
 
@@ -271,5 +305,19 @@ button {
     .next {
         grid-column: 3;
         justify-self: end;
+    }
+}
+
+// buttons
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+
+    .button {
+        text-align: center;
+
+        &:first-child { margin-top: 1em; }
     }
 }

@@ -1,14 +1,14 @@
 <nav class="breadcrumbs" aria-label="Breadcrumbs">
     <ol role="list">
-        <li><a class="path" href="/">Home</a></li>
+        <li><a href="/">Home</a></li>
         {% set current = section | default(value=page) %}
     {% for ancestor in current.ancestors %}
         {% if loop.first %}
             {% continue %}
         {% endif %}
         {% set section = get_section(path=ancestor) %}
-        <li><a class="path" href="{{ section.permalink }}">{{ section.title }}</a></li>
+        <li><a href="{{ section.permalink }}">{{ section.title }}</a></li>
     {% endfor %}
-        <li><a class="path active" href="{{ current.permalink }}" aria-current="page">{{ current.title }}</a></li>
+        <li><a href="{{ current.permalink }}" aria-current="page">{{ current.title }}</a></li>
     </ol>
 </nav>

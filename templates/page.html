@@ -6,6 +6,8 @@
 {% include "partials/breadcrumbs.html" %}
 {% endif %}
 
+{% if page %}
+<article class="post">
 <h1 class="title">{{ page.title }}</h1>
 <aside class="meta dim">
     {% if page.date %}
@@ -13,7 +15,6 @@
     {% endif %}
 </aside>
 
-<article id="content">
     {{ page.content | safe }}
 
     {% if config.extra.comments %}
@@ -23,6 +24,13 @@
     </article>
     {% endif %}
 </article>
+{% else %}
+<article class="post">
+<h1 class="title">{{ section.title }}</h1>
+
+    {{ section.content | safe }}
+</article>
+{% endif %}
 
 {% if page.ancestors | length != 1 %}
     {% set return = get_section(path=page.ancestors | last) %}
