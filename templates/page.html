@@ -2,7 +2,7 @@
 
 {% block content %}
 
-{% if page.ancestors | length == 1 %}
+{% if page.ancestors %}
 {% include "partials/breadcrumbs.html" %}
 {% endif %}
 
@@ -17,7 +17,7 @@
 
     {{ page.content | safe }}
 
-    {% if config.extra.comments %}
+    {% if config.extra.comments.enable %}
     <article class="comment">
         <h2>user</h2>
         content
@@ -34,7 +34,7 @@
 
 {% if page.ancestors | length != 1 %}
     {% set return = get_section(path=page.ancestors | last) %}
-    <a href="{{ return.permalink }}"><span class="return" role="presentation">↩</span> Return to {{ return.title }}</a>
+    <a href="{{ return.permalink | safe }}"><span class="return" role="presentation">↩</span> Return to {{ return.title }}</a>
 {% endif %}
 
 {% endblock content %}

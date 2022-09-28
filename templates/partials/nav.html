@@ -2,7 +2,7 @@
     <a class="skip dim" href="#main">Skip to main</a>
     <ul>
     {% for item in config.extra.menu %}
-        <li><a href="{{ item.link }}" {% if current_path == item.link %}aria-current="page"{% endif %}>{{ item.text }}</a></li>
+        <li><a href="{{ item.link | safe }}" {% if current_path == item.link %}aria-current="page"{% endif %}>{{ item.text }}</a></li>
     {% endfor %}
     </ul>
 </nav>

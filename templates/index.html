@@ -4,18 +4,18 @@
 
 <header class="banner">
     <img src="{{ get_url(path="/images/apartmentkitchen_milk.gif") }}" alt="bitmapdreams apartment kitchen milk pixel art">
-    <h1 class="title">hello!</h1>
-    <pclass="description">welcome to my tiny corner of the web where i overengineer solutions for simple problems and obsess over niche interests. here, you can find a bunch of pages where i barf words all over the place. enjoy the ride!</p>
+    <p class="title">hello!</>
+    <p class="description">welcome to my tiny corner of the web where i overengineer solutions for simple problems and obsess over niche interests. here, you can find a bunch of pages where i barf words all over the place. enjoy the ride!</p>
 </header>
 
 <hr />
 
-<h1 class="title">updates</h1>
+<h1 class="title">updates @ invicta</h1>
 
 {% set section = get_section(path="updates/_index.md") %}
 {% for page in section.pages %}
 <article class="post">
-    <h2 class="date">{{ page.date }}</h2>
+    <h2 class="date">{{ page.date }} :: {{ page.title }}</h2>
     {{ page.content | safe }}
 </article>
 {% endfor %}

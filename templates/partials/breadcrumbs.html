@@ -7,8 +7,8 @@
             {% continue %}
         {% endif %}
         {% set section = get_section(path=ancestor) %}
-        <li><a href="{{ section.permalink }}">{{ section.title }}</a></li>
+        <li><a href="{{ section.permalink | safe }}">{{ section.title }}</a></li>
     {% endfor %}
-        <li><a href="{{ current.permalink }}" aria-current="page">{{ current.title }}</a></li>
+        <li><a href="{{ current.permalink | safe }}" aria-current="page">{{ current.title }}</a></li>
     </ol>
 </nav>

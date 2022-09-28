@@ -8,6 +8,7 @@ feed_filename = "atom.xml"
 [markdown]
 # Whether to do syntax highlighting
 highlight_code = true
+render_emoji = true
 external_links_target_blank = true
 external_links_no_follow = true
 external_links_no_referrer = true
@@ -23,6 +24,7 @@ menu = [
     { text = "index", link = "/" },
     { text = "about", link = "/about/" },
     { text = "journal", link = "/journal/" },
+    { text = "dreams", link = "/dreams/" },
     { text = "fics", link = "/fics/" },
     { text = "links", link = "/links/" }
 ]

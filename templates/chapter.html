@@ -7,9 +7,12 @@
 {% endblock preload %}
 
 {% block content %}
+{% if page.ancestors %}
+{% include "partials/breadcrumbs.html" %}
+{% endif %}
 
 {% set parent = get_section(path=page.ancestors | last) %}
-{% if parent.pages | length > 1 %}
+{% if parent.pages %}
 <aside class="toc" aria-label="Table of contents">
     <details id="toc">
         <summary>Table of Contents</summary>
@@ -17,10 +20,10 @@
             <ol role="list">
                 <li class="title">{{ parent.title }}</li>
                 {% for chapter in parent.pages %}
-                {% if current_url == chapter.permalink %}
-                <li><a class="active" href="{{ chapter.permalink }}" aria-current="page">{{ chapter.title }}</a></li>
+                {% if current_url == chapter.permalink | safe %}
+                <li><a class="active" href="{{ chapter.permalink | safe }}" aria-current="page">{{ chapter.title }}</a></li>
                 {% else %}
-                <li><a href="{{ chapter.permalink }}">{{ chapter.title }}</a></li>
+                <li><a href="{{ chapter.permalink | safe }}">{{ chapter.title }}</a></li>
                 {% endif %}
                 {% endfor %}
             </ol>
@@ -45,13 +48,13 @@
 
 <nav class="pagination" aria-label="Pagination">
     {% if page.lower %}
-    <a class="previous" href="{{ page.lower.permalink }}"><span class="sr-hidden" role="presentation">←</span> {{ page.lower.title }}</a>
+    <a class="previous" href="{{ page.lower.permalink | safe }}"><span class="sr-hidden" role="presentation">←</span> {{ page.lower.title }}</a>
     {% endif %}
 
-    <a class="index" href="{{ parent.permalink }}">Return to {{ parent.title }}</a>
+    <a class="index" href="{{ parent.permalink | safe }}">Return to {{ parent.title }}</a>
 
     {% if page.higher %}
-    <a class="next" href="{{ page.higher.permalink }}">{{ page.higher.title }} <span class="sr-hidden" role="presentation">→</span></a>
+    <a class="next" href="{{ page.higher.permalink | safe }}">{{ page.higher.title }} <span class="sr-hidden" role="presentation">→</span></a>
     {% endif %}
 </nav>
 {% endblock content %}

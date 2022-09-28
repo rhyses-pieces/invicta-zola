@@ -10,7 +10,7 @@
 <ul class="posts-list">
     {% for page in section.pages %}
     <li>
-        <a href="{{ page.permalink }}">{{ page.title }}</a>
+        <a href="{{ page.permalink | safe }}">{{ page.title }}</a>
         <time class="dim" datetime="{{ page.date }}">{{ page.date }}</time>
     </li>
     {% endfor %}

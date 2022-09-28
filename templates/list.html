@@ -16,35 +16,30 @@
 {% endif %}
 {% endblock title %}
 
-{% if section.subsections and section.pages %}
+{% if section.subsections %}
 <h2 class="title">chaptered fics</h2>
 <ul class="posts-list">
     {% for _section in section.subsections %}
     {% set section = get_section(path=_section) %}
     <li>
-        <a href="{{ section.permalink }}">{{ section.title }}</a> 
+        <a href="{{ section.permalink | safe }}">{{ section.title }}</a> 
         {% set date = section.pages | map(attribute="date") | last | date(format='%B %_d, %Y') %}
         <span class="dim">{% if section.pages | map(attribute="updated") %}}Updated{% else %}Posted{% endif %} on <time datetime="{{ date }}">{{ date }}</time></span>
     </li>
     {% endfor %}    
 </ul>
+{% endif %}
 
-<h2 class="title">drabbles</h2>
-<ul class="posts-list">
-    {% for page in section.pages %}
-    <li>
-        <a href="{{ page.permalink }}">{{ page.title }}</a>
-        <span class="dim">{% if page.updated %}Updated{% else %}Posted{% endif %} on <time datetime="{{ page.date }}">{{ page.date | date(format='%B %_d, %Y') }}</time></span>
-    </li>
-    {% endfor %}
-</ul>
-{% else %}
+{% if section.pages %}
 {% block posts %}
+{% if section.ancestors | length == 1 %}
+<h2 class="title">drabbles</h2>
+{% endif %}
 <ul class="posts-list">
     {% for page in section.pages %}
     <li>
-        <a href="{{ page.permalink }}">{{ page.title }}</a>
-        <span class="dim">{% if page.updated %}Updated{% else %}Posted{% endif %} on <time datetime="{{ page.date }}">{{ page.date | date(format='%B %_d, %Y') }}</time></span>
+        <a href="{{ page.permalink | safe }}">{{ page.title }}</a>
+        <span class="dim">{% if page.updated %}Updated{% else %}Posted{% endif %} on <time datetime="{{ page.date }}">{{ page.date | date(format='%B %_d, %Y') | default(value="No date") }}</time></span>
     </li>
     {% endfor %}
 </ul>

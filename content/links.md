@@ -2,11 +2,21 @@
 title = "links"
 +++
 
-this is where i post links!
+<img src="/images/collegeroad_lipton.gif" style="float:right" alt="milk tea carton pixel art by bitmapdreams" />
+
+this is where i post links to a bunch of different places!
+
+## link back
 
 this is my button:
 
-![My 88x31 site button](/images/button.gif "88 by 31 button for invicta")
+<aside style="text-align:center">
+{% figure(image="/images/button.gif", alt="my 88x31 web button") %}
+please save this image to your own server when linking back. 
+{% end %}
+</aside>
+
+feel free to link me back at **https://invicta.neocities.org**!
 
 ## contact
 
@@ -34,7 +44,7 @@ i used these resources listed below to make my website!
 ### pixel art
 
 <aside class="buttons">
-{% button(image="/images/out/ad_skullsprinkles.gif", url="https://www.lejlart.com/apple.html", alt="appledust") %}
+{% button(image="/images/out/butapple1.gif", url="https://www.lejlart.com/apple.html", alt="appledust") %}
 for ficus and sunflower
 {% end %}
 
@@ -42,11 +52,15 @@ for ficus and sunflower
 for various images such as milk cartons, drinks, stars, and tarot cards
 {% end %}
 
+{% button(image="/images/out/whimsical.gif", url="http://whimsical.heartette.net", alt="Whimsical!") %}
+for favicon and link button template
+{% end %}
+
 {% button(image="/images/out/cannellebutton.gif", url="http://www.mooncandy.net/stef/", alt="Cannelle") %}
 for bird divider image
 {% end %}
 
-{% button(image="/images/out/dflink28.gif", url="https://www.jellyfishforest.com/duckyfeet/", alt="duckyfeet") %}
+{% button(image="/images/out/dflink29.gif", url="https://www.jellyfishforest.com/duckyfeet/", alt="duckyfeet") %}
 for bullet image and emojis
 {% end %}
 </aside>
