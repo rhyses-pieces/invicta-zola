@@ -41,7 +41,7 @@ main {
             grid-column: 1;
         }
 
-        :is(*):not(.toc) {
+        :is(*):not(.toc, .buttons) {
             grid-column: 2;
         }
     }
